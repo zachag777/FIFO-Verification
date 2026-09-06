@@ -16,8 +16,8 @@ parameter width = 8
 // clocking block
 
   clocking cb @ (posedge clk);
-    default input #1step output #2ns
-    // driver reads
+    default input #1step output #2ns;
+    // monitor samples
     input fifo_output, full, empty;
     // driver writes
     output fifo_input, write_en, read_en, reset;
