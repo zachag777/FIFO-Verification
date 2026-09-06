@@ -13,10 +13,10 @@ class FIFO_sequence #(
   virtual task body();
     FIFO_transaction#(width) trans; // declare transaction
     trans = FIFO_transaction#(width)::type_id::create("trans"); // create w factory
-    start_item(trans); // sync w driver
+    start_item(trans); // start handshake
     trans.randomize(); // randomize every bit except reset
     trans.reset = 0; // hold reset low
-    finish_item(trans); // pass to driver
+    finish_item(trans); // finish handshake
     
   endtask
 endclass
