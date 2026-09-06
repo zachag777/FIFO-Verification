@@ -1,3 +1,6 @@
+import uvm_pkg::*;
+`include "uvm_macros.svh"
+
 class FIFO_driver #(
 	parameter width = 8
 ) extends uvm_driver #(FIFO_transaction#(width));
