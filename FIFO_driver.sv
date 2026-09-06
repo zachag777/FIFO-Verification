@@ -6,7 +6,7 @@ class FIFO_driver #(
 	`uvm_component_param_utils(FIFO_driver#(width))
 
 	// constructor
-	function new(string name = "driver", uvm_component parent);
+	function new(string name = "driver", uvm_component parent = null);
 		super.new(name, parent);
 	endfunction
 
