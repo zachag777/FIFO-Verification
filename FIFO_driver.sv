@@ -1,7 +1,9 @@
-class FIFO_driver extends uvm_driver #(FIFO_transaction);
+class FIFO_driver #(
+	parameter width = 8
+) extends uvm_driver #(FIFO_transaction);
 	
 	// uvm macro
-	`uvm_component_utils(FIFO_driver)
+	`uvm_component_utils(FIFO_driver#(width))
 
 	// constructor
 	function new(string name, uvm_component parent);
@@ -11,7 +13,7 @@ class FIFO_driver extends uvm_driver #(FIFO_transaction);
 	
 	// create vif and get handle
 
-	virtual FIFO_interface fifoif;
+	virtual FIFO_interface#(width) fifoif;
 	
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
@@ -21,7 +23,7 @@ class FIFO_driver extends uvm_driver #(FIFO_transaction);
 	endfunction
 
 	task run_phase(uvm_phase phase);
-		FIFO_transaction trans;
+		FIFO_transaction#(width) trans;
 		forever begin
 		// get next
 			seq_item_port.get_next_item(trans);
