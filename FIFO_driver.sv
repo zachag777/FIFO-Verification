@@ -3,7 +3,7 @@ class FIFO_driver #(
 ) extends uvm_driver #(FIFO_transaction#(width));
 	
 	// uvm macro
-	`uvm_component_utils(FIFO_driver#(width))
+	`uvm_component_param_utils(FIFO_driver#(width))
 
 	// constructor
 	function new(string name = "driver", uvm_component parent);
@@ -17,7 +17,7 @@ class FIFO_driver #(
 	
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
-		if (!uvm_config_db #(virtual FIFO_interface#(width)::get(this, "", "fifoif", fifoif)) begin
+		if (!uvm_config_db #(virtual FIFO_interface#(width))::get(this, "", "fifoif", fifoif)) begin
 		`uvm_fatal(get_type_name(), "handle error")
 		end
 	endfunction
@@ -28,7 +28,7 @@ class FIFO_driver #(
 		// get next
 			seq_item_port.get_next_item(trans);
 			// drive signals
-			@(fifo_if.cb);
+			@(fifoif.cb);
 			fifoif.cb.reset <= trans.reset;
 			fifoif.cb.write_en <= trans.write_en;
 			fifoif.cb.read_en <= trans.read_en;
