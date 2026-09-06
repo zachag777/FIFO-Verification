@@ -1,5 +1,5 @@
 class FIFO_sequencer #(
-	paremeter width = 8;
+	parameter width = 8;
 )extends uvm_sequencer #(FIFO_transaction);
 	
 	// uvm macro
