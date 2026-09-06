@@ -1,8 +1,16 @@
+// imports
+import uvm_pkg::*;
+`include "uvm_macros.svh"
+
+// timescale
+`timescale 1ns/1ps
+
+
 interface FIFO_interface #(
 parameter width = 8
 )(
   // clock and reset
-  input logic clk,
+  input logic clk
 );
 // dut top level signals
   logic reset;
