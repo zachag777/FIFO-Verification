@@ -1,6 +1,9 @@
+import uvm_pkg::*;
+`include "uvm_macros.svh"
+
 class FIFO_sequencer #(
 	parameter width = 8
-)extends uvm_sequencer #(FIFO_transaction #(width));
+) extends uvm_sequencer #(FIFO_transaction #(width));
 	
 	// uvm macro
 	`uvm_component_param_utils(FIFO_sequencer#(width))
