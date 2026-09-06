@@ -1,12 +1,12 @@
 class FIFO_driver #(
 	parameter width = 8
-) extends uvm_driver #(FIFO_transaction);
+) extends uvm_driver #(FIFO_transaction#(width));
 	
 	// uvm macro
 	`uvm_component_utils(FIFO_driver#(width))
 
 	// constructor
-	function new(string name, uvm_component parent);
+	function new(string name = "driver", uvm_component parent);
 		super.new(name, parent);
 	endfunction
 
@@ -17,7 +17,7 @@ class FIFO_driver #(
 	
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
-		if (!uvm_config_db #(virtual FIFO_interface)::get(this, "", "fifoif", fifoif)) begin
+		if (!uvm_config_db #(virtual FIFO_interface#(width)::get(this, "", "fifoif", fifoif)) begin
 		`uvm_fatal(get_type_name(), "handle error")
 		end
 	endfunction
