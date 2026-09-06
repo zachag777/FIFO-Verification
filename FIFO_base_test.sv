@@ -1,7 +1,10 @@
+import uvm_pkg::*;
+`include "uvm_macros.svh"
+
 class FIFO_base_test #(
 	parameter width = 8
 ) extends uvm_test;
-	`uvm_component_param_utils(FIFO_basetest#(width))
+	`uvm_component_param_utils(FIFO_base_test#(width))
 	FIFO_env #(width) env;
 
 	function new(string name = "test", uvm_component parent = null);
