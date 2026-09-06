@@ -1,11 +1,13 @@
-class FIFO_env extends uvm_env;
+class FIFO_env #(
+	parameter width = 8
+) extends uvm_env;
 
 	function new(string name = "env", uvm_component parent);
 		super.new(name, parent);
 	endfunction
 
 	FIFO_driver = driver;
-	FIFO_sequencer = sequencer;
+	FIFO_sequencer#(width) = sequencer;
 
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
