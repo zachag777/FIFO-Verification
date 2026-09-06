@@ -1,6 +1,9 @@
+import uvm_pkg::*;
+`include "uvm_macros.svh"
+
 class FIFO_test_one #(
 	parameter width = 8
-) extends FIFO_basetest #(width);
+) extends FIFO_base_test #(width);
 	
 	`uvm_component_param_utils(FIFO_test_one#(width))
 
@@ -19,5 +22,16 @@ class FIFO_test_one #(
 		phase.drop_objection(this);
 
 	endtask
+
+endclass
+
+class FIFO_test_one_8 extends FIFO_test_one #(8);
+
+    `uvm_component_utils(FIFO_test_one_8)
+
+    function new(string name = "FIFO_test_one_8",
+                 uvm_component parent = null);
+        super.new(name, parent);
+    endfunction
 
 endclass
