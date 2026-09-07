@@ -1,0 +1,8 @@
+# Questa/ModelSim generated files
+work/
+*.wlf
+*.vstf
+*.bak
+transcript
+*.mti
+*.mpf
