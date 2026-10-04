@@ -14,16 +14,19 @@ class FIFO_env #(
 
 	FIFO_agent #(width) agent;
 	FIFO_scoreboard #(width, depth) scoreboard;
+	FIFO_coverage #(width) coverage;
 
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
 
 		agent = FIFO_agent#(width)::type_id::create("agent", this);
 		scoreboard = FIFO_scoreboard #(width, depth)::type_id::create("scoreboard", this);
+		coverage = FIFO_coverage #(width)::type_id::create("coverage", this);
 	endfunction
 	// connect monitor and scoreboard
 	function void connect_phase(uvm_phase phase);
 		super.connect_phase(phase);
 		agent.monitor.mon_analysis_port.connect(scoreboard.ap_imp);
+		agent.monitor.mon_analysis_port.connect(coverage.analysis_export);
 	endfunction
 endclass

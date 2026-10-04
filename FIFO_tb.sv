@@ -37,7 +37,7 @@ module FIFO_tb #(
 			fifoif
 		);
 	
-		run_test("FIFO_test_one_8");
+		run_test("FIFO_random_test_8");
 	end
 	
 

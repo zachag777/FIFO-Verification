@@ -9,7 +9,7 @@ class FIFO_scoreboard #(
 	logic [width-1:0] q[$:depth-1]; // reference model data member
 
 	// factory registration and constructor
-	`uvm_component_param_utils(FIFO_scoreboard #(width))
+	`uvm_component_param_utils(FIFO_scoreboard #(width, depth))
 	
 	function new(string name = "scoreboard", uvm_component parent = null);
 		super.new(name, parent);
@@ -39,17 +39,36 @@ class FIFO_scoreboard #(
 				trans.empty
 			),
 			UVM_LOW)
-
+		if(trans.reset) begin
+			q.delete();
+			return;
+		end
 		// monitor samples dut output after the posedge update, so we need to
 		// push/pop (updating our expected output) before comparing with the dut output
-		if (trans.write_en && !trans.full)
+		if (trans.read_en && q.size() > 0)
+			q.pop_front();
+		if (trans.write_en && q.size() < depth)
 			q.push_back(trans.fifo_input);
 
-		if (trans.read_en && !trans.empty)
-			q.pop_front();
+
 
 		// check sampled output vs expected output
 		// (determined using the reference model) and output potential error msg
+
+		// add uvm errors for full and empty using queue.size()
+		//full
+		if(trans.full != (q.size() == depth)) begin
+			if(!trans.full) begin
+				`uvm_error("FULL", "FIFO should be full")
+			end
+		end
+		
+		if(trans.empty != (q.size() == 0)) begin
+			if(!trans.empty) begin
+				`uvm_error("EMPTY", "FIFO should be empty")
+			end
+		end
+
 		if (q.size() > 0) begin
 			if (q[0] != trans.fifo_output)
 				`uvm_error("FIFO_SB",
@@ -59,8 +78,6 @@ class FIFO_scoreboard #(
 						trans.fifo_output
 					))
 		end
-
-		// add uvm errors for full and empty using queue.size()
 
 	endfunction
 

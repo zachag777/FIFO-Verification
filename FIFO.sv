@@ -79,7 +79,7 @@ always_ff @ (posedge clk) begin
 				read_ptr <= '0;
 			end
 			else begin
-				read_ptr <= read_ptr + 2'b10;
+				read_ptr <= read_ptr + 1'b1;
 			end
 		end
 		// increment write_ptr if write enable and if its not full

@@ -1,4 +1,4 @@
-import FIFO_pkg::*;
+import uvm_pkg::*;
 `include "uvm_macros.svh"
 
 class FIFO_transaction #(
