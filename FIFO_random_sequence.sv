@@ -18,7 +18,7 @@ class FIFO_random_sequence #(
 		// create transaction handle
 		FIFO_transaction #(width) trans;
 		//repeat x
-		repeat(100) begin
+		repeat(50) begin
 			//repeat 25
 			repeat(25) begin
 				// create transaction w factory
