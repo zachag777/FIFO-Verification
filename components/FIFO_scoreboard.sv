@@ -16,7 +16,7 @@ class FIFO_scoreboard #(
 	endfunction
 
 	// create transaction for analysis
-	uvm_analysis_imp #(FIFO_transaction #(width), FIFO_scoreboard #(width)) ap_imp;
+  uvm_analysis_imp #(FIFO_transaction #(width), FIFO_scoreboard #(width, depth)) ap_imp;
 
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
@@ -25,6 +25,8 @@ class FIFO_scoreboard #(
 
 	// transaction representing inputs driven by driver and outputs from dut
 	function void write(FIFO_transaction #(width) trans);
+      bit was_full = (q.size() == depth); // if we simultaneously read and write while full the write shouldnt go thru (based on dut)
+      bit was_empty = (q.size == 0);
 
 		// printing inputs from driver and the updated dut outputs
 		// (because we sample after the dut updates on posedge)
@@ -45,9 +47,9 @@ class FIFO_scoreboard #(
 		end
 		// monitor samples dut output after the posedge update, so we need to
 		// push/pop (updating our expected output) before comparing with the dut output
-		if (trans.read_en && q.size() > 0)
+      if (trans.read_en && !was_empty)
 			q.pop_front();
-		if (trans.write_en && q.size() < depth)
+      if (trans.write_en && !was_full)
 			q.push_back(trans.fifo_input);
 
 
@@ -68,7 +70,7 @@ class FIFO_scoreboard #(
 				`uvm_error("EMPTY", "FIFO should be empty")
 			end
 		end
-
+		
 		if (q.size() > 0) begin
 			if (q[0] != trans.fifo_output)
 				`uvm_error("FIFO_SB",

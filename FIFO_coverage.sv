@@ -7,6 +7,8 @@ class FIFO_coverage #(
 	`uvm_component_param_utils(FIFO_coverage #(width))
 	FIFO_transaction #(width) trans;
 
+	bit was_full;
+	bit was_empty;
 	covergroup FIFO_cg;
 		// all valid fifo operations including simultaneous read and write
 		// fifo.sv allows 00 but does not change the ptrs or register contents
@@ -19,7 +21,7 @@ class FIFO_coverage #(
 
 		// all possible states 
 		// declare simultaneous full and empty as illegal
-		state_cp: coverpoint {trans.full, trans.empty} {
+		state_cp: coverpoint {was_full, was_empty} {
 			bins empty = {2'b01};
 			bins full = {2'b10};
 			bins partial = {2'b00};
@@ -39,6 +41,8 @@ class FIFO_coverage #(
 	function void write(FIFO_transaction #(width) t);
 		trans = t;
 		FIFO_cg.sample();
+		was_full = t.full;
+		was_empty = t.empty;
 	endfunction
 
 	function void report_phase(uvm_phase phase);

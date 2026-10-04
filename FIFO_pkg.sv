@@ -15,9 +15,11 @@ package FIFO_pkg;
 
 	`include "sequences/FIFO_sequence.sv"
 	`include "FIFO_random_sequence.sv"
+	`include "FIFO_directed_sequence.sv"
 
 	`include "tests/FIFO_basetest.sv"
 	`include "tests/FIFO_test_one.sv"
 	`include "FIFO_random_test.sv"
+	`include "FIFO_directed_test.sv"
 
 endpackage

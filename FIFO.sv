@@ -30,7 +30,7 @@ generate
 		) u_reg (
 			.clk(clk),
 			.reset(reset),
-			.enable(write_en && write_ptr == i), // can only write if write is enabled and youre in the right register
+			.enable(write_en && write_ptr == i && !full), // can only write if write is enabled and youre in the right register and not full
 			.data_input(fifo_input),
 			.data_output(out_register[i]) // store register contents in array
 		);
